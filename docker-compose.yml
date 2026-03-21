@@ -1,0 +1,58 @@
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fintech-app
+    working_dir: /var/www
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:9C2SzOE0sZLb5d4Z7pQ1R8tU3vW6xY9aB1cD2eF3gH4=
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=fintech_wallet
+      - DB_USERNAME=fintech_user
+      - DB_PASSWORD=fintech_password
+      - CACHE_DRIVER=file
+      - QUEUE_CONNECTION=sync
+    volumes:
+      - ./backend:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - fintech-network
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: fintech-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: fintech_wallet
+      MYSQL_USER: fintech_user
+      MYSQL_PASSWORD: fintech_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - fintech-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+networks:
+  fintech-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

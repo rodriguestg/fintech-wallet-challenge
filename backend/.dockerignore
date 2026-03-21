@@ -1,0 +1,11 @@
+/node_modules
+.git
+.env.local
+.env.*.local
+/storage/logs/*
+/storage/app/uploads/*
+/bootstrap/cache/*
+/vendor/
+.DS_Store
+*.swp
+.vscode
