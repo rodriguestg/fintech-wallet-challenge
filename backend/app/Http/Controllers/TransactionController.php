@@ -21,8 +21,8 @@ class TransactionController extends Controller
               ->orWhere('recipient_id', $user->id);
         });
 
-        if($request->has('type') && in_array($request->type, ['debit', 'credit'])) {
-            if($request->type === 'debit') {
+        if($request->has('type') && in_array($request->type, ['sent', 'received'])) {
+            if($request->type === 'sent') {
                 $transactions->where('sender_id', $user->id);
             } else {
                 $transactions->where('recipient_id', $user->id);

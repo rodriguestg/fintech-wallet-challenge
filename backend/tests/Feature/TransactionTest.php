@@ -24,14 +24,14 @@ class TransactionTest extends TestCase
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
             'amount' => 100,
-            'type' => 'debit',
+            'type' => 'sent',
         ]);
 
         Transaction::create([
             'sender_id' => $recipient->id,
             'recipient_id' => $sender->id,
             'amount' => 100,
-            'type' => 'credit',
+            'type' => 'received',
         ]);
 
         $response = $this->actingAs($sender)->getJson('/api/transactions');

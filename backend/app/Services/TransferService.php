@@ -28,20 +28,20 @@ class TransferService {
 
                 $recipient->wallet->increment('balance', $amount);
 
-                // Debit transaction
+                // Sent transaction
                 Transaction::create([
                     'sender_id' => $sender->id,
                     'recipient_id' => $recipient->id,
                     'amount' => $amount,
-                    'type' => 'debit',
+                    'type' => 'sent',
                 ]);
 
-                // Credit transaction
+                // Received transaction
                 Transaction::create([
                     'sender_id' => $sender->id,
                     'recipient_id' => $recipient->id,
                     'amount' => $amount,
-                    'type' => 'credit',
+                    'type' => 'received',
                 ]);
                 
                 return [
