@@ -17,3 +17,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Docker volumes
+mysql_data/
+
+# Laravel
+/bootstrap/cache/
+/vendor/
+/node_modules/
+.DS_Store

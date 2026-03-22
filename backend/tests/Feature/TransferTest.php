@@ -32,4 +32,33 @@ class TransferTest extends TestCase
         $this->assertEquals(900, $sender->wallet->fresh()->balance);
         $this->assertEquals(100, $recipient->wallet->fresh()->balance);
     }
+
+    public function test_transfer_fails_insufficient_balance()
+    {
+        $sender = User::factory()->create();
+        $recipient = User::factory()->create();
+
+        Wallet::create(['user_id' => $sender->id, 'balance' => 50]);
+        Wallet::create(['user_id' => $recipient->id, 'balance' => 0]);
+
+        $response = $this->actingAs($sender)->postJson('/api/transfers', [
+            'recipient_email' => $recipient->email,
+            'amount' => 100,
+        ]);
+
+        $response->assertStatus(500);
+        $response->assertJson(['success' => false]);
+        $this->assertEquals(50, $sender->wallet->fresh()->balance);
+        $this->assertEquals(0, $recipient->wallet->fresh()->balance);
+    }
+
+    public function test_user_not_authenticated_transfer(){
+        $response = $this->postJson('/api/transfers', [
+            'recipient_email' => 'recipient@example.com',
+            'amount' => 100,
+        ]);
+
+        $response->assertStatus(401);
+    }
 }
+
