@@ -4,13 +4,16 @@ import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import TransferView from '../views/TransferView.vue';
 import TransactionHistoryView from '../views/TransactionHistoryView.vue'
+import DashboardView from '../views/DashboardView.vue'
 
 
 const routes = [
     { path: '/login', component: LoginView, meta: { requiresAuth: false } },
     { path: '/register', component: RegisterView, meta: { requiresAuth: false } },
     { path: '/transfer', component: TransferView, meta: { requiresAuth: true } },
-    { path: '/history', component: TransactionHistoryView, meta: { requiresAuth: true } }
+    { path: '/history', component: TransactionHistoryView, meta: { requiresAuth: true } },
+    { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
+    { path: '/', redirect: '/dashboard' }
 ]
 
 const router = createRouter({
