@@ -48,7 +48,7 @@ Como Desenvolvedor, priorizei a simplicidade, segurança e a manutenção do có
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/fintech-wallet-challenge.git
+git clone https://github.com/rodriguestg/fintech-wallet-challenge.git
 cd fintech-wallet-challenge
 
 Configure as variáveis de ambiente:
