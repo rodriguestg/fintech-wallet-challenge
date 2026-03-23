@@ -74,13 +74,13 @@ const fetchUserData = async () => {
 
 const fetchTransactions = async () => {
   try {
-    loading.value = true
-    const response = await api.get('/transactions?per_page=5')
-    transactions.value = response.data.data
+    loading.value = true;
+    const response = await api.get('/transactions/recent');
+    transactions.value = response.data.data;
   } catch (err) {
-    console.error('Erro ao buscar transações:', err)
+    console.error('Erro ao buscar transações:', err);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 

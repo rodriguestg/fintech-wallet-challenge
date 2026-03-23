@@ -43,4 +43,18 @@ class TransactionController extends Controller
 
         return response()->json($transaction, 200);
     }
+
+    public function recent(Request $request)
+    {
+        $user = auth()->user();
+
+        $transactions = Transaction::query()
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->with(['sender:id,name,email', 'recipient:id,name,email'])
+            ->limit(5)
+            ->get();
+
+        return TransactionResource::collection($transactions);
+    }
 }
