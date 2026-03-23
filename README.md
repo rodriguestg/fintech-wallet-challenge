@@ -44,49 +44,45 @@ Como Desenvolvedor, priorizei a simplicidade, segurança e a manutenção do có
 - Docker e Docker Compose (Recomendado)
 - Node.js 20+ (Para rodar o frontend localmente)
 
-### Passo a Passo - Backend (API)
+## Como rodar o projeto localmente
 
-1. Clone o repositório:
+A infraestrutura local foi construída para ser "Plug and Play". O Docker Compose cuidará da instalação das dependências do PHP (Composer) e do Node (NPM) automaticamente na primeira execução.
+
+### Pré-requisitos
+- Docker e Docker Compose instalados.
+- Nenhuma instalação local de PHP ou Node é necessária.
+
+### Passo a Passo
+
+1. Clone o repositório e acesse a pasta:
 ```bash
 git clone https://github.com/rodriguestg/fintech-wallet-challenge.git
 cd fintech-wallet-challenge
 
-Configure as variáveis de ambiente:
+Suba os containers em segundo plano:
 
-cp backend/.env.example backend/.env
+docker-compose up -d
 
-Suba os containers do Docker (Laravel + MySQL):
+AVISO IMPORTANTE SOBRE O PRIMEIRO CARREGAMENTO:
+Como é a primeira execução, os containers irão baixar as dependências do Laravel (vendor) e do Vue (node_modules) automaticamente. Isso pode levar de 1 a 3 minutos.
 
-docker-compose up -d --build
+Para acompanhar o progresso da API e saber quando ela está pronta, rode:
 
-Instale as dependências e gere a chave da aplicação:
+docker-compose logs -f
 
-docker-compose exec app composer install
-docker-compose exec app php artisan key:generate
+(Aguarde até ver a mensagem "Server running on [http://0.0.0.0:8000]". Pressione Ctrl+C para sair do log).
 
-Rode as migrations e popule o banco de dados:
+Com a API rodando, execute as migrations e popule o banco de dados com os usuários de teste:
 
 docker-compose exec app php artisan migrate:refresh --seed
 
-A API estará rodando em http://localhost:8000
+Acessos Locais
 
-Passo a Passo - Frontend (Vue.js)
-
-Acesse a pasta do frontend:
-
-cd frontend
-
-Instale as dependências:
-
-npm install
-
-Inicie o servidor de desenvolvimento:
-
-npm run dev
-
-A aplicação estará rodando em http://localhost:5173
+Frontend: http://localhost:5173
+Backend (API): http://localhost:8000
 
 ```
+---
 
 ## Testes Automatizados
 
