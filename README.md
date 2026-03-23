@@ -92,5 +92,17 @@ Para rodar os testes localmente via Docker:
 
 docker-compose exec app php artisan test
 
+## Navegação e Rotas (Frontend)
+
+A aplicação é uma Single Page Application (SPA) e utiliza o Vue Router para o gerenciamento de rotas no lado do cliente. As rotas estão divididas rigorosamente entre áreas públicas (`/login`, `/register`) e áreas protegidas (`/dashboard`, `/transfer`, `/history`), controladas por *Navigation Guards*.
+
+**Tratamento de Erros (Página 404):**
+Caso você acesse uma URL inexistente, digite um caminho inválido ou enfrente uma tela de erro 404, **retorne à página inicial** acessando a raiz do domínio (`/`). O sistema de rotas interceptará o acesso e redirecionará você automaticamente para o Dashboard (se estiver autenticado) ou para a tela de Login (se a sessão estiver vazia).
+
+**Boas Práticas de Segurança (Logout):**
+Ao finalizar seus testes na plataforma, **sempre clique no botão de Logout**. Esta ação é fundamental para:
+1. Invalidar o token Bearer (Sanctum) ativo no Backend.
+2. Limpar os dados e o token no Frontend.
+3. Garantir que o próximo teste inicie com um estado limpo e seguro.
 
 ---
