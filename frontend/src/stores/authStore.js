@@ -39,10 +39,14 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const fetchUser = async () => {
-    const response = await api.get('/user')
-    user.value = response.data.user
-    wallet.value = response.data.wallet
-    return response.data
+    const response = await api.get('/me');
+    user.value = response.data.user;
+    wallet.value = response.data.wallet;
+
+    console.log('User:', user.value);
+    console.log('Wallet:', wallet.value);
+    
+    return response.data;
   }
 
   return {

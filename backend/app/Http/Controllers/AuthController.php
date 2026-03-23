@@ -70,14 +70,13 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function me(Request $request)
-    {
+    public function me(Request $request) {
         $user = $request->user();
         $user->load('wallet');
 
         return response()->json([
-            'success' => true,
-            'user' => $user->wallet,
+            'user' => $user,
+            'wallet' => $user->wallet,
         ], 200);
     }
 }

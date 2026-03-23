@@ -30,6 +30,7 @@ class TransferService {
 
                 // Sent transaction
                 Transaction::create([
+                    'user_id' => $sender->id,
                     'sender_id' => $sender->id,
                     'recipient_id' => $recipient->id,
                     'amount' => $amount,
@@ -38,6 +39,7 @@ class TransferService {
 
                 // Received transaction
                 Transaction::create([
+                    'user_id' => $recipient->id,
                     'sender_id' => $sender->id,
                     'recipient_id' => $recipient->id,
                     'amount' => $amount,

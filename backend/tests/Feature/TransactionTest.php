@@ -21,6 +21,7 @@ class TransactionTest extends TestCase
         Wallet::create(['user_id' => $recipient->id, 'balance' => 0]);
 
         Transaction::create([
+            'user_id' => $sender->id,
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
             'amount' => 100,
@@ -28,8 +29,9 @@ class TransactionTest extends TestCase
         ]);
 
         Transaction::create([
-            'sender_id' => $recipient->id,
-            'recipient_id' => $sender->id,
+            'user_id' => $recipient->id,
+            'sender_id' => $sender->id,
+            'recipient_id' => $recipient->id,
             'amount' => 100,
             'type' => 'received',
         ]);

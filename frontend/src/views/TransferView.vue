@@ -11,7 +11,7 @@
 
         <div class="form-group">
           <label>Valor (R$)</label>
-          <input v-model.number="amount" type="number" step="0.01" required />
+          <input v-model.number="amount" type="number" step="0.01" placeholder="0.00" required />
         </div>
 
         <button type="submit" :disabled="loading">
@@ -61,7 +61,7 @@ const handleTransfer = async () => {
     return
   }
 
-  if (amount.value <= 0) {
+  if (typeof amount.value !== 'number' || amount.value <= 0) {
     error.value = 'O valor deve ser maior que zero'
     return
   }

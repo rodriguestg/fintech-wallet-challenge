@@ -80,8 +80,12 @@ const fetchTransactions = async () => {
 }
 
 onMounted(async () => {
-  await fetchUserData()
-  await fetchTransactions()
+  try {
+    await fetchUserData()
+    await fetchTransactions()
+  } catch (err) {
+    console.error('Erro ao carregar dashboard:', err)
+  }
 })
 </script>
 
