@@ -40,12 +40,6 @@ Como Desenvolvedor, priorizei a simplicidade, segurança e a manutenção do có
 
 ## Como rodar o projeto localmente
 
-### Pré-requisitos
-- Docker e Docker Compose (Recomendado)
-- Node.js 20+ (Para rodar o frontend localmente)
-
-## Como rodar o projeto localmente
-
 A infraestrutura local foi construída para ser "Plug and Play". O Docker Compose cuidará da instalação das dependências do PHP (Composer) e do Node (NPM) automaticamente na primeira execução.
 
 ### Pré-requisitos
@@ -64,7 +58,8 @@ Suba os containers em segundo plano:
 docker-compose up -d
 
 AVISO IMPORTANTE SOBRE O PRIMEIRO CARREGAMENTO:
-Como é a primeira execução, os containers irão baixar as dependências do Laravel (vendor) e do Vue (node_modules) automaticamente. Isso pode levar de 1 a 3 minutos.
+Como é a primeira execução, os containers irão baixar as dependências:
+Do Laravel (vendor) e do Vue (node_modules) automaticamente. Isso pode levar de 1 a 3 minutos.
 
 Para acompanhar o progresso da API e saber quando ela está pronta, rode:
 
