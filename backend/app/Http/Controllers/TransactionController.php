@@ -16,19 +16,15 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $transactions = Transaction::where('user_id', $user->id);
-
-        if($request->has('type') && in_array($request->type, ['sent', 'received'])) {
-            $transactions->where('type', $request->type);
-        }
-
-        if($request->has('start_date')) {
-            $transactions->whereDate('created_at', '>=', $request->start_date);
-        }
-
-        if($request->has('end_date')) {
-            $transactions->whereDate('created_at', '<=', $request->end_date);
-        }
+        $transactions = Transaction::where('user_id', $user->id)->when($request->filled('type'), function ($q) use ($request) {
+            return $q->where('type', $request->type);
+        })
+        ->when($request->filled('start_date'), function ($q) use ($request) {
+            return $q->whereDate('created_at', '>=', $request->start_date);
+        })
+        ->when($request->filled('end_date'), function ($q) use ($request) {
+            return $q->whereDate('created_at', '<=', $request->end_date);
+        });
 
         $extract = $transactions->with(['sender:id,name,email', 'recipient:id,name,email'])->orderBy('created_at', 'desc')->paginate(15);
 
