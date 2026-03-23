@@ -8,7 +8,13 @@
         <router-link to="/dashboard">Dashboard</router-link>
         <router-link to="/transfer">Transferir</router-link>
         <router-link to="/history">Histórico</router-link>
-        <button @click="logout" class="btn-logout">Logout</button>
+        <button 
+          @click="handleLogout" 
+          class="btn-logout" 
+          :disabled="authStore.isLoggingOut"
+        >
+          {{ authStore.isLoggingOut ? 'Saindo...' : 'Logout' }}
+        </button>
       </div>
     </nav>
 
@@ -17,13 +23,15 @@
 </template>
 
 <script setup>
-import { useAuthStore } from './stores/authStore'
+import { useAuthStore } from './stores/authStore';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
+const router = useRouter()
 
-const logout = async () => {
-  await authStore.logout()
-  window.location.href = '/login'
+const handleLogout = async () => {
+  await authStore.logout();
+  router.push('/login');
 }
 </script>
 
@@ -87,5 +95,11 @@ body {
 
 .btn-logout:hover {
   background: #c82333;
+}
+
+.btn-logout:disabled {
+  background-color: #c82333;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 </style>

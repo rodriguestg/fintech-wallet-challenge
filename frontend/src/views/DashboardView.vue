@@ -7,7 +7,12 @@
 
     <div class="wallet-card">
       <h2>Seu Saldo</h2>
-      <p class="balance">R$ {{ formatCurrency(authStore.wallet?.balance || 0) }}</p>
+      <div v-if="authStore.isLoadingUser" class="balance-loading">
+        Carregando...
+      </div>
+      <p v-else class="balance">
+        R$ {{ formatCurrency(authStore.wallet?.balance || 0) }}
+      </p>
       <router-link to="/transfer" class="btn btn-primary">
         Transferir Dinheiro
       </router-link>
@@ -107,6 +112,13 @@ h1 {
 
 .header p {
   color: #666;
+}
+
+.balance-loading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
 }
 
 .wallet-card {
